@@ -1,43 +1,61 @@
 # Python Data Pipeline
 
-Portfolio-safe **data engineering and analytics project** built with Python, Pandas, NumPy, PostgreSQL and Metabase-compatible outputs.
+[![CI](https://github.com/kauadev77/data-pipeline-python/actions/workflows/ci.yml/badge.svg)](https://github.com/kauadev77/data-pipeline-python/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-2.2-150458?logo=pandas&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-ready-4169E1?logo=postgresql&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-The project simulates an e-commerce orders pipeline using fictional data. It validates records, transforms them, calculates business metrics and prepares a clean dataset for PostgreSQL or BI.
+A portfolio-safe **data engineering and analytics pipeline** built with Python, Pandas, NumPy and PostgreSQL-ready outputs.
 
-## Highlights
+The project simulates an e-commerce order flow using fictional data, validates the dataset, transforms records, calculates business metrics and prepares analytics-ready outputs for PostgreSQL and BI tools such as Metabase.
 
-- ETL pipeline with Pandas
+## What this demonstrates
+
+- ETL pipeline design
 - Data validation and cleaning
-- Derived metrics with NumPy
-- PostgreSQL-ready schema
-- CSV input/output
-- Unit tests
-- Docker Compose with PostgreSQL
-- Example SQL for analytics and Metabase
+- Pandas transformations
+- NumPy-based derived metrics
+- SQL analytics
+- PostgreSQL-ready schema design
+- Automated tests with pytest
+- Docker Compose for local PostgreSQL
+- CI with GitHub Actions
+- Safe use of fictional portfolio data
 
-## Pipeline
+## Architecture
 
-```text
-Raw CSV
-   |
-   v
-Validation
-   |
-   v
-Cleaning + Transformation
-   |
-   v
-Business Metrics
-   |
-   +---- cleaned_orders.csv
-   |
-   +---- PostgreSQL
-             |
-             v
-          Metabase
+```mermaid
+flowchart LR
+    CSV[Raw CSV] --> Validate[Validation]
+    Validate --> Transform[Cleaning + Transformation]
+    Transform --> Metrics[Business Metrics]
+    Metrics --> CleanCSV[cleaned_orders.csv]
+    Metrics --> Postgres[(PostgreSQL)]
+    Postgres --> BI[Metabase / BI]
 ```
 
-## Run
+## Project structure
+
+```text
+.
+├── data/
+│   └── orders.csv
+├── src/
+│   └── pipeline.py
+├── sql/
+│   ├── schema.sql
+│   └── analytics.sql
+├── tests/
+│   └── test_pipeline.py
+├── .github/workflows/ci.yml
+├── .env.example
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+```
+
+## Run locally
 
 ```bash
 python -m venv .venv
@@ -45,6 +63,8 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python src/pipeline.py
 ```
+
+The pipeline creates `data/cleaned_orders.csv`.
 
 ## Tests
 
@@ -58,6 +78,32 @@ pytest
 docker compose up -d
 ```
 
-Then use the SQL in `sql/analytics.sql` as a starting point for dashboards.
+The repository includes:
 
-All records are fictional. No company data, client information or production code is used.
+- `sql/schema.sql` for the target table
+- `sql/analytics.sql` with sample analytical queries
+
+## Example metrics
+
+The pipeline calculates:
+
+- number of orders
+- total gross value
+- recognized revenue
+- average paid order value
+
+## Metabase
+
+The SQL queries can be used as a starting point for dashboards such as:
+
+- revenue by month
+- top products by revenue
+- order-status distribution
+
+## Portfolio safety
+
+All records are fictional. No company data, customer information or proprietary production code is used.
+
+## License
+
+MIT
